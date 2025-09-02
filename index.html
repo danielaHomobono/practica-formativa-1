@@ -14,7 +14,7 @@
     <li>Zagordo, Romina</li>
   </ul>
 
-  <form action="#" method="post">
+  <form id="registroForm">
     <label for="nombre">Nombre:</label>
     <input type="text" id="nombre" name="nombre" required><br><br>
 
@@ -29,5 +29,33 @@
 
     <button type="submit">Enviar</button>
   </form>
+
+  <script>
+    document.getElementById('registroForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const datos = {
+        nombre: document.getElementById('nombre').value,
+        apellido: document.getElementById('apellido').value,
+        usuario: document.getElementById('usuario').value,
+        contrasena: document.getElementById('contrasena').value
+      };
+
+      fetch('/api/registro', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Registro enviado correctamente');
+      })
+      .catch(error => {
+        alert('Error al enviar el registro');
+      });
+    });
+  </script>
 </body>
 </html>
