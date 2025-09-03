@@ -5,13 +5,68 @@
   <title>Práctica Formativa</title>
 </head>
 <body>
-  <h1>Sistema Backend</h1>
-  <p placeholder="texto-backend">Plataforma de gestión desde backend.</p>
-  <h2 id="equipo-dev">Desarrolladores</h2>
+  <h1>Práctica Formativa 1</h1>
+  <p>Bienvenidos al proyecto de práctica formativa.</p>
+  <h2>Alumnas</h2>
   <ul>
     <li>Hassen, Verónica</li>
     <li>Homobono, Daniela</li>
     <li>Zagordo, Romina</li>
   </ul>
+
+  <form id="registroForm">
+    <label for="firstName">Nombre:</label>
+    <input type="text" id="firstName" name="firstName" placeholder="Ingrese su nombre" required><br><br>
+
+    <label for="lastName">Apellido:</label>
+    <input type="text" id="lastName" name="lastName" placeholder="Ingrese su apellido" required><br><br>
+
+    <label for="username">Nombre de usuario:</label>
+    <input type="text" id="username" name="username" placeholder="Elija un nombre de usuario" required><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required><br><br>
+
+    <button type="submit">Registrarse</button>
+  </form>
+
+<!--
+AJAX Call: Envío de datos personales al backend
+Parámetros:
+- username: string
+- password: string
+Método: POST
+URL: /api/perfil
+-->  
+  <script>
+    document.getElementById('registroForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const datos = {
+        nombre: document.getElementById('firstName').value,
+        apellido: document.getElementById('lastName').value,
+        usuario: document.getElementById('username').value,
+        contrasena: document.getElementById('password').value
+      };
+
+      fetch('/api/registro', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Registro enviado correctamente');
+      })
+      .catch(error => {
+        alert('Error al enviar el registro');
+      });
+    });
+  </script>
 </body>
 </html>
